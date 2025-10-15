@@ -1,0 +1,24 @@
+---
+export interface Cta {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  heading: string;
+  body: string;
+  primaryCta: Cta;
+  secondaryCta?: Cta;
+}
+
+const { heading, body, primaryCta, secondaryCta } = Astro.props as Props;
+---
+
+<section class="cta-bar" data-analytics="cta-bar">
+  <h3>{heading}</h3>
+  <p>{body}</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href={primaryCta.href}>{primaryCta.label}</a>
+    {secondaryCta && <a class="btn btn-secondary" href={secondaryCta.href}>{secondaryCta.label}</a>}
+  </div>
+</section>

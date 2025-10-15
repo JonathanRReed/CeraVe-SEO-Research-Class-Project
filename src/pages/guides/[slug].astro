@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GuideTemplate from '../../components/templates/GuideTemplate.astro';
+import { getCollection } from 'astro:content';
+
+const { slug } = Astro.params;
+const guides = await getCollection('guides');
+const entry = guides.find((guide) => guide.slug === slug);
+
+if (!entry) {
+  throw new Error(`Guide not found for slug: ${slug}`);
+}
+
+const breadcrumbs = [
+  { title: 'Home', url: '/' },
+  { title: 'Guides', url: '/guides' },
+  { title: entry.data.title, url: `/guides/${entry.slug}` },
+];
+---
+
+<BaseLayout
+  title={`${entry.data.title} | Guides`}
+  description={entry.data.description}
+  keywords={entry.data.keywords}
+  breadcrumbs={breadcrumbs}
+>
+  <GuideTemplate entry={entry} />
+</BaseLayout>

@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GuideTemplate from '../components/templates/GuideTemplate.astro';
+import { getCollection } from 'astro:content';
+
+const guides = await getCollection('guides');
+const entry = guides.find((guide) => guide.slug === 'start-here');
+
+if (!entry) {
+  throw new Error('Guide entry for start-here not found');
+}
+
+const breadcrumbs = [
+  { title: 'Home', url: '/' },
+  { title: 'Start Here', url: '/start-here' },
+];
+---
+
+<BaseLayout
+  title="Start a 3-step routine"
+  description={entry.data.description}
+  keywords={entry.data.keywords}
+  breadcrumbs={breadcrumbs}
+>
+  <GuideTemplate entry={entry} />
+</BaseLayout>

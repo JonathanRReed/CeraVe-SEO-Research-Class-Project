@@ -1,0 +1,64 @@
+---
+import FaqAccordion from '../FaqAccordion.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'ingredients'>;
+}
+
+const { entry } = Astro.props as Props;
+const { data } = entry;
+const { Content } = await entry.render();
+
+const faqSchema = data.faqs.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: data.faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
+    }
+  : undefined;
+---
+
+<article class="ingredient-template" data-page-type="ingredient">
+  <header>
+    <h1 class="section-heading">{data.title}</h1>
+    <p class="section-subhead">{data.description}</p>
+  </header>
+  <div class="ingredient-overview">
+    <section class="ingredient-highlights">
+      <h2>What it does</h2>
+      <ul>
+        {data.highlights.map((highlight) => (
+          <li>{highlight}</li>
+        ))}
+      </ul>
+    </section>
+    <section class="ingredient-facts">
+      <div class="prose">
+        <Content />
+      </div>
+    </section>
+    {data.myths.length > 0 && (
+      <section class="ingredient-myths">
+        <h2>Myths vs reality</h2>
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+          {data.myths.map((item) => (
+            <article class="myth-card">
+              <h3>Myth: {item.myth}</h3>
+              <p><strong>Fact:</strong> {item.fact}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+  {data.faqs.length > 0 && <FaqAccordion items={data.faqs} />}
+  {faqSchema && <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>}
+</article>

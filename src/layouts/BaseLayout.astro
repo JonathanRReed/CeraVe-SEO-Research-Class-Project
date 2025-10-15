@@ -1,0 +1,230 @@
+---
+import '../styles/global.css';
+import type { SiteEntry } from '../data/siteMap';
+import { siteMap } from '../data/siteMap';
+
+type Props = {
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  canonical?: string;
+  breadcrumbs?: SiteEntry[];
+};
+
+const {
+  title = 'CeraVe Dry Skin Playbook',
+  description =
+    'Evidence-backed skincare guidance for dry, sensitive skin. Learn simple routines, comparisons, and ingredient breakdowns built for Carlos.',
+  keywords = ['dry skin routine', 'cerave for men', 'skin barrier repair'],
+  canonical = new URL(Astro.url.pathname, Astro.site ?? 'http://localhost:4321').toString(),
+  breadcrumbs = [],
+} = Astro.props as Props;
+
+const navGroups = [
+  {
+    label: 'Guides',
+    items: siteMap.filter((entry) => entry.category === 'Guides'),
+  },
+  {
+    label: 'Comparisons',
+    items: siteMap.filter((entry) => entry.category === 'Comparisons'),
+  },
+  {
+    label: 'Ingredients',
+    items: siteMap.filter((entry) => entry.category === 'Ingredients'),
+  },
+  {
+    label: 'Tools',
+    items: siteMap.filter((entry) => entry.category === 'Tools'),
+  },
+];
+
+const primaryLinks = [
+  { title: 'Home', url: '/' },
+  { title: 'Start Here', url: '/start-here' },
+  { title: 'FAQs', url: '/faqs' },
+  { title: 'About', url: '/about' },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'CeraVe Dry Skin Playbook',
+  url: canonical,
+  description,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${canonical}?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords.join(', ')} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="CeraVe Dry Skin Playbook" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <title>{title}</title>
+    <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+    <script type="application/json" id="site-map-data">{JSON.stringify(siteMap)}</script>
+  </head>
+  <body>
+    <header class="nav-shell">
+      <div class="container nav-inner">
+        <a class="logo" href="/">
+          <strong>CeraVe Playbook</strong>
+        </a>
+        <nav class="nav-links" aria-label="Primary">
+          {primaryLinks.map((link) => (
+            <a href={link.url}>{link.title}</a>
+          ))}
+          {navGroups.map((group) => (
+            <div class="nav-group">
+              <button
+                type="button"
+                class="nav-trigger"
+                aria-haspopup="true"
+                aria-expanded="false"
+                data-nav-trigger
+              >
+                {group.label}
+              </button>
+              <div class="nav-panel" role="menu">
+                {group.items.map((item) => (
+                  <a href={item.url} role="menuitem">{item.title}</a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </nav>
+        <div class="nav-search">
+          <label class="sr-only" for="site-search">Search</label>
+          <input id="site-search" type="search" placeholder="Search guides" autocomplete="off" />
+          <div class="search-results" role="listbox" />
+        </div>
+      </div>
+    </header>
+    {breadcrumbs.length > 0 && (
+      <div class="breadcrumb-shell">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol>
+              {breadcrumbs.map((crumb, index) => (
+                <li>
+                  {index < breadcrumbs.length - 1 ? <a href={crumb.url}>{crumb.title}</a> : crumb.title}
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </div>
+      </div>
+    )}
+    <main id="main-content">
+      <div class="container main-shell">
+        <slot />
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="container stack">
+        <div>
+          <strong>Measure what matters.</strong>
+          <p>Track clicks on CTAs, FAQ opens, and organic entrances by page type to prove impact.</p>
+        </div>
+        <div class="footer-links">
+          <a href="/about">About this project</a>
+          <a href="/faqs">FAQ library</a>
+          <a href="/tools/routine-builder">Build a routine</a>
+        </div>
+        <span>© {new Date().getFullYear()} CeraVe Dry Skin Playbook. Built for portfolio demonstration.</span>
+      </div>
+    </footer>
+    <script type="module">
+      const searchInput = document.querySelector('#site-search');
+      const resultsEl = document.querySelector('.search-results');
+      const navGroups = Array.from(document.querySelectorAll('.nav-group'));
+      const siteMapData = document.getElementById('site-map-data');
+      const entries = JSON.parse(siteMapData?.textContent ?? '[]');
+
+      navGroups.forEach((group) => {
+        const trigger = group.querySelector('.nav-trigger');
+        const panel = group.querySelector('.nav-panel');
+
+        const setOpen = (isOpen) => {
+          panel?.classList.toggle('open', isOpen);
+          trigger?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        };
+
+        const openPanel = () => setOpen(true);
+        const closePanel = () => setOpen(false);
+
+        trigger?.addEventListener('mouseenter', openPanel);
+        trigger?.addEventListener('focus', openPanel);
+        trigger?.addEventListener('click', (event) => {
+          event.preventDefault();
+          if (panel?.classList.contains('open')) {
+            closePanel();
+          } else {
+            openPanel();
+          }
+        });
+
+        group.addEventListener('mouseleave', closePanel);
+        group.addEventListener('focusout', (event) => {
+          if (!group.contains(event.relatedTarget)) {
+            closePanel();
+          }
+        });
+      });
+
+      const renderResults = (value) => {
+        if (!resultsEl) return;
+        resultsEl.innerHTML = '';
+        if (!value) {
+          resultsEl.classList.remove('visible');
+          return;
+        }
+        const filtered = entries
+          .filter(
+            (entry) =>
+              entry.title.toLowerCase().includes(value) || entry.description.toLowerCase().includes(value)
+          )
+          .slice(0, 6);
+        if (filtered.length === 0) {
+          resultsEl.classList.remove('visible');
+          return;
+        }
+        filtered.forEach((entry) => {
+          const link = document.createElement('a');
+          link.href = entry.url;
+          link.textContent = entry.title;
+          link.setAttribute('role', 'option');
+          resultsEl.appendChild(link);
+        });
+        resultsEl.classList.add('visible');
+      };
+
+      searchInput?.addEventListener('input', (event) => {
+        const target = event.target;
+        renderResults(target.value.toLowerCase().trim());
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!resultsEl?.contains(event.target) && event.target !== searchInput) {
+          resultsEl?.classList.remove('visible');
+        }
+      });
+    </script>
+  </body>
+</html>

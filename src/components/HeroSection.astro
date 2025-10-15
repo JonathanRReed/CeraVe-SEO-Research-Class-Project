@@ -1,0 +1,42 @@
+---
+export interface Cta {
+  label: string;
+  href: string;
+  variant?: 'primary' | 'secondary';
+}
+
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  subheading: string;
+  primaryCta?: Cta;
+  secondaryCta?: Cta;
+}
+
+const { eyebrow, heading, subheading, primaryCta, secondaryCta } = Astro.props as Props;
+---
+
+<section class="hero container">
+  <div class="stack">
+    {eyebrow && <span class="badge">{eyebrow}</span>}
+    <h1>{heading}</h1>
+    <p>{subheading}</p>
+    {(primaryCta || secondaryCta) && (
+      <div class="hero-actions">
+        {primaryCta && (
+          <a class={['btn', 'btn-primary'].join(' ')} href={primaryCta.href}>
+            {primaryCta.label}
+          </a>
+        )}
+        {secondaryCta && (
+          <a class={['btn', 'btn-secondary'].join(' ')} href={secondaryCta.href}>
+            {secondaryCta.label}
+          </a>
+        )}
+      </div>
+    )}
+  </div>
+  <div class="hero-media">
+    <slot name="media" />
+  </div>
+</section>

@@ -1,0 +1,76 @@
+---
+import FaqAccordion from '../FaqAccordion.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'guides'>;
+}
+
+const { entry } = Astro.props as Props;
+const { data } = entry;
+const { Content, headings } = await entry.render();
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: data.title,
+  description: data.description,
+  totalTime: 'PT10M',
+  step: data.tlDr.map((item, index) => ({
+    '@type': 'HowToStep',
+    position: index + 1,
+    text: item,
+  })),
+};
+---
+
+<article class="guide-template" data-page-type="guide">
+  <header>
+    <h1 class="section-heading">{data.title}</h1>
+    <p class="section-subhead">{data.description}</p>
+    {data.tlDr.length > 0 && (
+      <div class="card">
+        <strong>TL;DR</strong>
+        <ul>
+          {data.tlDr.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </header>
+  <div class="guide-body layout-with-toc">
+    {headings.length > 0 && (
+      <aside class="toc-sidebar" aria-label="On this page">
+        <h2>Jump to</h2>
+        <nav>
+          {headings.slice(0, 8).map((heading) => (
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          ))}
+        </nav>
+      </aside>
+    )}
+    <div class="guide-content">
+      <div class="prose">
+        <Content />
+      </div>
+      {data.products.length > 0 && (
+        <section class="product-grid">
+          <h2>Pick your product</h2>
+          <div class="grid">
+            {data.products.map((product) => (
+              <article class="card" data-product-tag={product.tags.join(',')}>
+                <h3>{product.name}</h3>
+                <p>{product.description}</p>
+                <a class="btn btn-secondary" href={product.url}>See product</a>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </div>
+  {data.faqs.length > 0 && <FaqAccordion items={data.faqs} />}
+  {data.updated && <p class="last-updated">Last updated: {data.updated}</p>}
+  <script type="application/ld+json">{JSON.stringify(schema)}</script>
+</article>
