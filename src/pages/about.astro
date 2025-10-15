@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/HeroSection.astro';
+
+const breadcrumbs = [
+  { title: 'Home', url: '/' },
+  { title: 'About', url: '/about' },
+];
+---
+
+<BaseLayout
+  title="About This Project"
+  description="Learn about the research, strategy, and goals behind this CeraVe skincare resource."
+  keywords={['skincare project', 'seo research', 'dry skin resource']}
+  breadcrumbs={breadcrumbs}
+>
+  <HeroSection
+    heading="About This Project"
+    subheading="An SEO-focused microsite built to answer real search questions and help people with dry, sensitive skin."
+    primaryCta={{ label: 'View Research', href: '/#seo-priorities' }}
+  />
+
+  <section class="stack">
+    <div class="card">
+      <h2 class="section-heading">Project Goals</h2>
+      <p>This site was built as a portfolio demonstration of SEO-first content strategy. The goal is to help "Carlos" — a persona representing men with dry, sensitive skin — find practical, evidence-based skincare guidance.</p>
+
+      <h3>Target Audience</h3>
+      <ul>
+        <li>Men aged 25-45 with dry, sensitive skin</li>
+        <li>First-time skincare users looking for simple routines</li>
+        <li>People searching for CeraVe product comparisons and ingredient explanations</li>
+        <li>Users seeking barrier repair and gentle skincare advice</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2 class="section-heading">Research Methodology</h2>
+      <p>Keywords were identified using Semrush and Google Trends data, focusing on high-intent queries related to dry skin routines, product comparisons, and ingredient education.</p>
+
+      <h3>Content Strategy</h3>
+      <ul>
+        <li><strong>Guides:</strong> Step-by-step routines with HowTo schema</li>
+        <li><strong>Comparisons:</strong> Neutral product analysis with tables and decision trees</li>
+        <li><strong>Ingredients:</strong> Plain-language explanations with myth-busting</li>
+        <li><strong>Tools:</strong> Interactive routine builder for personalization</li>
+        <li><strong>FAQs:</strong> Direct answers optimized for AI Overviews</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2 class="section-heading">Technical Implementation</h2>
+      <p>Built with Astro for optimal performance and SEO. Features include:</p>
+      <ul>
+        <li>Static site generation for fast loading</li>
+        <li>MDX for rich content with frontmatter</li>
+        <li>Responsive design with utility-first CSS</li>
+        <li>Schema markup for rich snippets</li>
+        <li>Interactive components with minimal JavaScript</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2 class="section-heading">Measurement Plan</h2>
+      <p>Success is measured by:</p>
+      <ul>
+        <li>Organic traffic from target keywords</li>
+        <li>Engagement metrics (time on page, scroll depth)</li>
+        <li>Conversion to routine builder usage</li>
+        <li>FAQ open rates and search functionality</li>
+        <li>Internal link clicks between content types</li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
