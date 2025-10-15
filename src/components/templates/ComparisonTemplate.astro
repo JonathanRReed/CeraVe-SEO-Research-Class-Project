@@ -1,0 +1,99 @@
+---
+import FaqAccordion from '../FaqAccordion.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'comparisons'>;
+}
+
+const { entry } = Astro.props as Props;
+const { data } = entry;
+const { Content } = await entry.render();
+
+const faqSchema = data.faqs.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: data.faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
+    }
+  : undefined;
+---
+
+<article class="comparison-template" data-page-type="comparison">
+  <header>
+    <h1 class="section-heading">{data.title}</h1>
+    <p class="section-subhead">{data.description}</p>
+  </header>
+  <div class="comparison-body">
+    {data.criteria.length > 0 && (
+      <section>
+        <h2>Side-by-side snapshot</h2>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th scope="col">Criteria</th>
+              <th scope="col">CeraVe</th>
+              <th scope="col">Alternative</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.criteria.map((item) => (
+              <tr>
+                <th scope="row">{item.label}</th>
+                <td>{item.cerave}</td>
+                <td>{item.competitor}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    )}
+    <div class="comparison-highlights">
+      <div>
+        <h2>Pros and watchouts</h2>
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+          <article class="card">
+            <h3>CeraVe</h3>
+            <ul>
+              {data.pros.cerave.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Alternative</h3>
+            <ul>
+              {data.pros.competitor.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ul>
+          </article>
+        </div>
+      </div>
+      {data.recommendations.length > 0 && (
+        <div>
+          <h2>Who should pick which</h2>
+          <ul>
+            {data.recommendations.map((rec) => (
+              <li>
+                <strong>{rec.summary}</strong> — {rec.audience}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+    <div class="prose">
+      <Content />
+    </div>
+  </div>
+  {data.faqs.length > 0 && <FaqAccordion items={data.faqs} />}
+  {faqSchema && <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>}
+</article>

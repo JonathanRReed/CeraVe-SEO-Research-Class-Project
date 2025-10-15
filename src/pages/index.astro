@@ -1,16 +1,128 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import CtaBar from '../components/CtaBar.astro';
+import { siteMap } from '../data/siteMap';
 
+const guides = siteMap.filter((entry) => entry.category === 'Guides');
+const comparisons = siteMap.filter((entry) => entry.category === 'Comparisons');
+const ingredients = siteMap.filter((entry) => entry.category === 'Ingredients');
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Skincare for dry, sensitive skin made simple"
+  description="SEO-first microsite that helps Carlos build a 3-step routine, compare CeraVe products, and learn ingredient science fast."
+  keywords={[
+    'dry skin routine',
+    'cerave routine',
+    'men skincare routine',
+    'dry sensitive skin tips',
+  ]}
+>
+  <HeroSection
+    eyebrow="Built for Carlos"
+    heading="Skincare for dry, sensitive skin made simple"
+    subheading="Answer real search questions with clear guides, comparisons, and ingredient explainers designed to help men start and stick with a barrier-safe routine."
+    primaryCta={{ label: 'Build my routine', href: '/start-here' }}
+    secondaryCta={{ label: 'Compare cleansers', href: '/comparisons/cerave-vs-cetaphil-cleanser' }}
+  >
+    <div slot="media">
+      <img src="/hero-routine.svg" alt="CeraVe skincare products arranged for a 3-step routine" loading="lazy" />
+    </div>
+  </HeroSection>
+
+  <section class="stack container">
+    <div class="card">
+      <span class="badge">SEO priorities</span>
+      <h2 class="section-heading">Answer the questions Carlos already searches</h2>
+      <p class="section-subhead">
+        Each page mirrors high-intent queries, provides a clear TL;DR, and connects to the CeraVe routine that keeps dry skin comfortable.
+      </p>
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+        <div>
+          <h3>Guides</h3>
+          <p>Step-by-step routines with HowTo schema, TL;DR summaries, and internal links.</p>
+        </div>
+        <div>
+          <h3>Comparisons</h3>
+          <p>Neutral matchups with tables, pros and cons, and decision trees to drive trust.</p>
+        </div>
+        <div>
+          <h3>Ingredients</h3>
+          <p>Plain-language explainers with myths, layering advice, and glossary-ready tooltips.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stack container">
+    <h2 class="section-heading">Start with these guides</h2>
+    <p class="section-subhead">Three core guides help new visitors build a dependable routine.</p>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+      {guides.slice(0, 3).map((guide) => (
+        <article class="card">
+          <h3>{guide.title}</h3>
+          <p>{guide.description}</p>
+          <a class="btn btn-secondary" href={guide.url}>Read guide</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="stack container">
+    <h2 class="section-heading">Tackle the top comparisons</h2>
+    <p class="section-subhead">Give Carlos confidence by showing how CeraVe stacks up to common alternatives.</p>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+      {comparisons.map((page) => (
+        <article class="card">
+          <h3>{page.title}</h3>
+          <p>{page.description}</p>
+          <a class="btn btn-secondary" href={page.url}>Compare now</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="stack container">
+    <h2 class="section-heading">Learn the ingredient fundamentals</h2>
+    <p class="section-subhead">Short explainers define each hero ingredient, myth-bust, and explain layering.</p>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+      {ingredients.map((page) => (
+        <article class="card">
+          <h3>{page.title}</h3>
+          <p>{page.description}</p>
+          <a class="btn btn-secondary" href={page.url}>Explore ingredient</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="stack container">
+    <h2 class="section-heading">Tools and FAQs</h2>
+    <p class="section-subhead">Interactive and structured content to lift engagement and snippet capture.</p>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+      <article class="card">
+        <h3>Routine Builder</h3>
+        <p>Pick dryness and sensitivity concerns, then export a custom day/night plan.</p>
+        <a class="btn btn-secondary" href="/tools/routine-builder">Open tool</a>
+      </article>
+      <article class="card">
+        <h3>FAQ Library</h3>
+        <p>Direct answers to AI Overview-ready questions with FAQ schema applied.</p>
+        <a class="btn btn-secondary" href="/faqs">Check FAQs</a>
+      </article>
+      <article class="card">
+        <h3>About the Project</h3>
+        <p>See the research workflow, measurement plan, and SEO wins behind the build.</p>
+        <a class="btn btn-secondary" href="/about">Read about</a>
+      </article>
+    </div>
+  </section>
+
+  <CtaBar
+    heading="Ready to prove impact?"
+    body="Track CTA clicks, FAQ opens, and organic entrances with lightweight event tags."
+    primaryCta={{ label: 'Build my routine', href: '/start-here' }}
+    secondaryCta={{ label: 'See measurement plan', href: '/about' }}
+  />
+</BaseLayout>
