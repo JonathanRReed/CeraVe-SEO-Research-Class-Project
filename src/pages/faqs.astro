@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import { getCollection } from 'astro:content';
+
+const faqs = await getCollection('faqs');
+
+const categories = [...new Set(faqs.map(faq => faq.data.category))];
+
+const breadcrumbs = [
+  { title: 'Home', url: '/' },
+  { title: 'FAQs', url: '/faqs' },
+];
+---
+
+<BaseLayout
+  title="Frequently Asked Questions"
+  description="Answers to common questions about dry skin care, routines, and product recommendations."
+  keywords={['skincare faq', 'dry skin questions', 'skincare advice']}
+  breadcrumbs={breadcrumbs}
+>
+  <HeroSection
+    heading="Frequently Asked Questions"
+    subheading="Quick answers to the most common questions about dry skin care."
+    primaryCta={{ label: 'Browse Guides', href: '/guides' }}
+  />
+
+  <section class="stack">
+    {categories.map((category) => (
+      <div>
+        <h2 class="section-heading">{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
+        <FaqAccordion
+          items={faqs
+            .filter((faq) => faq.data.category === category)
+            .map((faq) => ({ question: faq.data.question, answer: faq.data.answer }))
+          }
+        />
+      </div>
+    ))}
+  </section>
+</BaseLayout>

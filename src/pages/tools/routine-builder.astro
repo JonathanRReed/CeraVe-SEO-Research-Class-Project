@@ -1,0 +1,237 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/HeroSection.astro';
+
+const breadcrumbs = [
+  { title: 'Home', url: '/' },
+  { title: 'Tools', url: '/tools' },
+  { title: 'Routine Builder', url: '/tools/routine-builder' },
+];
+
+const routineOptions = {
+  dryness: [
+    { value: 'mild', label: 'Occasional tightness' },
+    { value: 'moderate', label: 'Frequent flaking' },
+    { value: 'severe', label: 'Constant dryness and irritation' },
+  ],
+  sensitivity: [
+    { value: 'low', label: 'Rarely reacts to products' },
+    { value: 'moderate', label: 'Some products cause stinging' },
+    { value: 'high', label: 'Most products cause irritation' },
+  ],
+  concerns: [
+    { value: 'acne', label: 'Breakouts' },
+    { value: 'redness', label: 'Redness and inflammation' },
+    { value: 'aging', label: 'Fine lines and texture' },
+    { value: 'pores', label: 'Large pores' },
+  ],
+  time: [
+    { value: 'morning', label: 'Morning (protection focus)' },
+    { value: 'night', label: 'Night (repair focus)' },
+  ],
+};
+---
+
+<BaseLayout
+  title="Routine Builder"
+  description="Create a personalized skincare routine based on your skin concerns and preferences."
+  keywords={['skincare routine builder', 'custom routine', 'dry skin routine']}
+  breadcrumbs={breadcrumbs}
+>
+  <HeroSection
+    heading="Build Your Routine"
+    subheading="Answer a few questions to get a personalized day and night skincare routine."
+    primaryCta={{ label: 'Get Started', href: '#builder' }}
+  />
+
+  <section class="routine-builder" id="builder">
+    <div class="routine-form">
+      <form id="routine-form">
+        <div class="form-group">
+          <label for="dryness">How dry is your skin?</label>
+          <select id="dryness" name="dryness" required>
+            <option value="">Select dryness level</option>
+            {routineOptions.dryness.map((option) => (
+              <option value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="sensitivity">How sensitive is your skin?</label>
+          <select id="sensitivity" name="sensitivity" required>
+            <option value="">Select sensitivity level</option>
+            {routineOptions.sensitivity.map((option) => (
+              <option value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Additional concerns (optional)</label>
+          <div class="routine-options">
+            {routineOptions.concerns.map((concern) => (
+              <label class="checkbox-label">
+                <input type="checkbox" name="concerns" value={concern.value} />
+                {concern.label}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="routine-time">Which routine do you want?</label>
+          <select id="routine-time" name="routine-time" required>
+            <option value="">Select routine type</option>
+            {routineOptions.time.map((option) => (
+              <option value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Generate Routine</button>
+      </form>
+    </div>
+
+    <div class="routine-result" id="routine-result" style="display: none;">
+      <h2>Your Personalized Routine</h2>
+      <div id="routine-output"></div>
+      <button class="btn btn-secondary" onclick="window.print()">Print Routine</button>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('routine-form');
+    const result = document.getElementById('routine-result');
+    const output = document.getElementById('routine-output');
+
+    const routines = {
+      morning: {
+        mild: {
+          steps: [
+            'Gentle cleanse with lukewarm water',
+            'Apply hyaluronic acid serum',
+            'Moisturize with lightweight lotion',
+            'Apply broad-spectrum SPF 30+',
+          ],
+          products: [
+            'CeraVe Hydrating Facial Cleanser',
+            'CeraVe Hyaluronic Acid Serum',
+            'CeraVe AM Facial Moisturizing Lotion with SPF 30',
+          ],
+        },
+        moderate: {
+          steps: [
+            'Gentle cleanse with hydrating cleanser',
+            'Apply niacinamide serum',
+            'Moisturize with barrier cream',
+            'Apply mineral sunscreen SPF 50',
+          ],
+          products: [
+            'CeraVe Hydrating Facial Cleanser',
+            'CeraVe Niacinamide Serum',
+            'CeraVe Moisturizing Cream',
+            'CeraVe Mineral Sunscreen Lotion SPF 50',
+          ],
+        },
+        severe: {
+          steps: [
+            'Gentle cleanse with cream cleanser',
+            'Apply ceramide-rich moisturizer',
+            'Seal with healing ointment on dry patches',
+            'Apply fragrance-free mineral SPF 50',
+          ],
+          products: [
+            'CeraVe Hydrating Cream-to-Foam Cleanser',
+            'CeraVe Moisturizing Cream',
+            'CeraVe Healing Ointment',
+            'CeraVe Mineral Sunscreen Lotion SPF 50',
+          ],
+        },
+      },
+      night: {
+        mild: {
+          steps: [
+            'Remove sunscreen with gentle cleanser',
+            'Apply hyaluronic acid serum',
+            'Moisturize with lightweight lotion',
+            'Optional: Light retinol if tolerated',
+          ],
+          products: [
+            'CeraVe Hydrating Facial Cleanser',
+            'CeraVe Hyaluronic Acid Serum',
+            'CeraVe PM Facial Moisturizing Lotion',
+          ],
+        },
+        moderate: {
+          steps: [
+            'Cleanse with hydrating formula',
+            'Apply niacinamide serum',
+            'Moisturize with barrier cream',
+            'Seal dry areas with ointment',
+          ],
+          products: [
+            'CeraVe Hydrating Facial Cleanser',
+            'CeraVe Niacinamide Serum',
+            'CeraVe Moisturizing Cream',
+            'CeraVe Healing Ointment',
+          ],
+        },
+        severe: {
+          steps: [
+            'Cleanse with cream-to-foam cleanser',
+            'Apply ceramide-rich moisturizer',
+            'Seal with healing ointment',
+            'Use humidifier while sleeping',
+          ],
+          products: [
+            'CeraVe Hydrating Cream-to-Foam Cleanser',
+            'CeraVe Moisturizing Cream',
+            'CeraVe Healing Ointment',
+          ],
+        },
+      },
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const dryness = formData.get('dryness');
+      const sensitivity = formData.get('sensitivity');
+      const concerns = formData.getAll('concerns');
+      const time = formData.get('routine-time');
+
+      if (!dryness || !sensitivity || !time) {
+        alert('Please fill in all required fields');
+        return;
+      }
+
+      const routine = routines[time][dryness];
+
+      output.innerHTML = `
+        <div class="routine-step">
+          <h3>${time === 'morning' ? 'Morning' : 'Night'} Routine</h3>
+          <p><strong>Dryness Level:</strong> ${routineOptions.dryness.find(o => o.value === dryness).label}</p>
+          <p><strong>Sensitivity Level:</strong> ${routineOptions.sensitivity.find(o => o.value === sensitivity).label}</p>
+          ${concerns.length > 0 ? `<p><strong>Additional Concerns:</strong> ${concerns.map(c => routineOptions.concerns.find(o => o.value === c).label).join(', ')}</p>` : ''}
+        </div>
+        <div class="routine-step">
+          <h4>Steps:</h4>
+          <ol>
+            ${routine.steps.map(step => `<li>${step}</li>`).join('')}
+          </ol>
+        </div>
+        <div class="routine-step">
+          <h4>Recommended Products:</h4>
+          <ul>
+            ${routine.products.map(product => `<li>${product}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+
+      result.style.display = 'block';
+      result.scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</BaseLayout>
