@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import { getCollection } from 'astro:content';
+
+const ingredients = await getCollection('ingredients');
+---
+
+<BaseLayout
+  title="Ingredient Decoder"
+  description="Understand the barrier-friendly ingredients inside CeraVe formulas."
+  keywords={['cerave ingredients', 'ceramide benefits', 'niacinamide uses']}
+  breadcrumbs={[
+    { title: 'Home', url: '/' },
+    { title: 'Ingredients', url: '/ingredients' },
+  ]}
+>
+  <HeroSection
+    heading="Ingredient Decoder"
+    subheading="Learn what each hero ingredient does, how to layer it, and when to reach for it."
+    primaryCta={{ label: 'Explore ceramides first', href: '/ingredients/ceramides' }}
+  />
+
+  <section class="stack container">
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+      {ingredients.map((entry) => (
+        <article class="card" data-page-type="ingredient">
+          <h3>{entry.data.title}</h3>
+          <p>{entry.data.description}</p>
+          <a class="btn btn-secondary" href={`/ingredients/${entry.slug}`}>See ingredient</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

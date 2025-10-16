@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import { getCollection } from 'astro:content';
+
+const guides = await getCollection('guides');
+---
+
+<BaseLayout
+  title="Guide Library"
+  description="Step-by-step CeraVe routines built for dry, sensitive skin."
+  keywords={['dry skin guides', 'cerave routine guide', 'skin barrier repair']}
+  breadcrumbs={[
+    { title: 'Home', url: '/' },
+    { title: 'Guides', url: '/guides' },
+  ]}
+>
+  <HeroSection
+    heading="Guide Library"
+    subheading="Choose a guide to build or troubleshoot your dry skin routine with barrier-safe steps."
+    primaryCta={{ label: 'Build my routine', href: '/start-here' }}
+  />
+
+  <section class="stack container">
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+      {guides.map((entry) => (
+        <article class="card" data-page-type="guide">
+          <h3>{entry.data.title}</h3>
+          <p>{entry.data.description}</p>
+          <a class="btn btn-secondary" href={`/guides/${entry.slug}`}>Read guide</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
