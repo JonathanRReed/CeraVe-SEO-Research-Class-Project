@@ -1,11 +1,9 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import HeroSection from '../../components/HeroSection.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import { siteMap } from '../data/siteMap';
 
-const breadcrumbs = [
-  { title: 'Home', url: '/' },
-  { title: 'About', url: '/about' },
-];
+const breadcrumbs = siteMap.filter((entry) => ['Home', 'About'].includes(entry.title));
 ---
 
 <BaseLayout

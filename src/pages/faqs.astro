@@ -1,12 +1,12 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import HeroSection from '../../components/HeroSection.astro';
-import FaqAccordion from '../../components/FaqAccordion.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
 import { getCollection } from 'astro:content';
 
 const faqs = await getCollection('faqs');
 
-const categories = [...new Set(faqs.map(faq => faq.data.category))];
+const categories = [...new Set(faqs.map((faq) => faq.data.category))];
 
 const breadcrumbs = [
   { title: 'Home', url: '/' },
