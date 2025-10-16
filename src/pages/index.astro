@@ -31,25 +31,25 @@ const ingredients = siteMap.filter((entry) => entry.category === 'Ingredients');
     </div>
   </HeroSection>
 
-  <section class="stack container">
-    <div class="card">
-      <span class="badge">SEO priorities</span>
-      <h2 class="section-heading">Answer the questions Carlos already searches</h2>
-      <p class="section-subhead">
+  <section class="container">
+    <div class="card" style="padding: 2rem 1.5rem;">
+      <span class="badge">SEO-first approach</span>
+      <h2 class="section-heading" style="margin-top: 0.5rem;">Answer the questions Carlos already searches</h2>
+      <p class="section-subhead" style="margin-bottom: 1.5rem;">
         Each page mirrors high-intent queries, provides a clear TL;DR, and connects to the CeraVe routine that keeps dry skin comfortable.
       </p>
-      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem;">
         <div>
-          <h3>Guides</h3>
-          <p>Step-by-step routines with HowTo schema, TL;DR summaries, and internal links.</p>
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text);">Guides</h3>
+          <p style="color: var(--color-muted); font-size: 0.9375rem; margin: 0;">Step-by-step routines with HowTo schema, TL;DR summaries, and internal links.</p>
         </div>
         <div>
-          <h3>Comparisons</h3>
-          <p>Neutral matchups with tables, pros and cons, and decision trees to drive trust.</p>
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text);">Comparisons</h3>
+          <p style="color: var(--color-muted); font-size: 0.9375rem; margin: 0;">Neutral matchups with tables, pros and cons, and decision trees to drive trust.</p>
         </div>
         <div>
-          <h3>Ingredients</h3>
-          <p>Plain-language explainers with myths, layering advice, and glossary-ready tooltips.</p>
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text);">Ingredients</h3>
+          <p style="color: var(--color-muted); font-size: 0.9375rem; margin: 0;">Plain-language explainers with myths, layering advice, and glossary-ready tooltips.</p>
         </div>
       </div>
     </div>
@@ -57,12 +57,12 @@ const ingredients = siteMap.filter((entry) => entry.category === 'Ingredients');
 
   <section class="stack container">
     <h2 class="section-heading">Start with these guides</h2>
-    <p class="section-subhead">Three core guides help new visitors build a dependable routine.</p>
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+    <p class="section-subhead" style="max-width: 600px;">Three core guides help new visitors build a dependable routine.</p>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
       {guides.slice(0, 3).map((guide) => (
-        <article class="card">
-          <h3>{guide.title}</h3>
-          <p>{guide.description}</p>
+        <article class="card" style="display: flex; flex-direction: column; gap: 1rem;">
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0; color: var(--color-text);">{guide.title}</h3>
+          <p style="color: var(--color-muted); font-size: 0.9375rem; margin: 0; flex-grow: 1;">{guide.description}</p>
           <a class="btn btn-secondary" href={guide.url}>Read guide</a>
         </article>
       ))}
@@ -71,12 +71,12 @@ const ingredients = siteMap.filter((entry) => entry.category === 'Ingredients');
 
   <section class="stack container">
     <h2 class="section-heading">Tackle the top comparisons</h2>
-    <p class="section-subhead">Give Carlos confidence by showing how CeraVe stacks up to common alternatives.</p>
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+    <p class="section-subhead" style="max-width: 600px;">Give Carlos confidence by showing how CeraVe stacks up to common alternatives.</p>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
       {comparisons.map((page) => (
-        <article class="card">
-          <h3>{page.title}</h3>
-          <p>{page.description}</p>
+        <article class="card" style="display: flex; flex-direction: column; gap: 1rem;">
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0; color: var(--color-text);">{page.title}</h3>
+          <p style="color: var(--color-muted); font-size: 0.9375rem; margin: 0; flex-grow: 1;">{page.description}</p>
           <a class="btn btn-secondary" href={page.url}>Compare now</a>
         </article>
       ))}
@@ -85,12 +85,12 @@ const ingredients = siteMap.filter((entry) => entry.category === 'Ingredients');
 
   <section class="stack container">
     <h2 class="section-heading">Learn the ingredient fundamentals</h2>
-    <p class="section-subhead">Short explainers define each hero ingredient, myth-bust, and explain layering.</p>
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+    <p class="section-subhead" style="max-width: 600px;">Short explainers define each hero ingredient, myth-bust, and explain layering.</p>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;">
       {ingredients.map((page) => (
-        <article class="card">
-          <h3>{page.title}</h3>
-          <p>{page.description}</p>
+        <article class="card" style="display: flex; flex-direction: column; gap: 1rem;">
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0; color: var(--color-text);">{page.title}</h3>
+          <p style="color: var(--color-muted); font-size: 0.9375rem; margin: 0; flex-grow: 1;">{page.description}</p>
           <a class="btn btn-secondary" href={page.url}>Explore ingredient</a>
         </article>
       ))}
@@ -99,21 +99,21 @@ const ingredients = siteMap.filter((entry) => entry.category === 'Ingredients');
 
   <section class="stack container">
     <h2 class="section-heading">Tools and FAQs</h2>
-    <p class="section-subhead">Interactive and structured content to lift engagement and snippet capture.</p>
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
-      <article class="card">
-        <h3>Routine Builder</h3>
-        <p>Pick dryness and sensitivity concerns, then export a custom day/night plan.</p>
+    <p class="section-subhead" style="max-width: 600px;">Interactive and structured content to lift engagement and snippet capture.</p>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+      <article class="card" style="display: flex; flex-direction: column; gap: 1rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0; color: var(--color-text);">Routine Builder</h3>
+        <p style="color: var(--color-muted); font-size: 0.9375rem; margin: 0; flex-grow: 1;">Pick dryness and sensitivity concerns, then export a custom day/night plan.</p>
         <a class="btn btn-secondary" href="/tools/routine-builder">Open tool</a>
       </article>
-      <article class="card">
-        <h3>FAQ Library</h3>
-        <p>Direct answers to AI Overview-ready questions with FAQ schema applied.</p>
+      <article class="card" style="display: flex; flex-direction: column; gap: 1rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0; color: var(--color-text);">FAQ Library</h3>
+        <p style="color: var(--color-muted); font-size: 0.9375rem; margin: 0; flex-grow: 1;">Direct answers to AI Overview-ready questions with FAQ schema applied.</p>
         <a class="btn btn-secondary" href="/faqs">Check FAQs</a>
       </article>
-      <article class="card">
-        <h3>About the Project</h3>
-        <p>See the research workflow, measurement plan, and SEO wins behind the build.</p>
+      <article class="card" style="display: flex; flex-direction: column; gap: 1rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0; color: var(--color-text);">About the Project</h3>
+        <p style="color: var(--color-muted); font-size: 0.9375rem; margin: 0; flex-grow: 1;">See the research workflow, measurement plan, and SEO wins behind the build.</p>
         <a class="btn btn-secondary" href="/about">Read about</a>
       </article>
     </div>

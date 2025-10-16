@@ -27,14 +27,14 @@ const faqSchema = data.faqs.length
 ---
 
 <article class="comparison-template" data-page-type="comparison">
-  <header>
-    <h1 class="section-heading">{data.title}</h1>
-    <p class="section-subhead">{data.description}</p>
+  <header style="display: grid; gap: 1rem; margin-bottom: 2rem;">
+    <h1 class="section-heading" style="margin-bottom: 0;">{data.title}</h1>
+    <p class="section-subhead" style="margin-bottom: 0; font-size: 1.125rem;">{data.description}</p>
   </header>
-  <div class="comparison-body">
+  <div class="comparison-body" style="display: grid; gap: 2.5rem;">
     {data.criteria.length > 0 && (
       <section>
-        <h2>Side-by-side snapshot</h2>
+        <h2 style="font-size: 1.75rem; font-weight: 600; margin-bottom: 1.25rem;">Side-by-side snapshot</h2>
         <table class="comparison-table">
           <thead>
             <tr>
@@ -55,23 +55,23 @@ const faqSchema = data.faqs.length
         </table>
       </section>
     )}
-    <div class="comparison-highlights">
+    <div class="comparison-highlights" style="display: grid; gap: 2rem;">
       <div>
-        <h2>Pros and watchouts</h2>
-        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
-          <article class="card">
-            <h3>CeraVe</h3>
-            <ul>
+        <h2 style="font-size: 1.75rem; font-weight: 600; margin-bottom: 1.25rem;">Pros and watchouts</h2>
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+          <article class="card" style="padding: 1.5rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0 0 1rem 0; color: var(--color-accent-dark);">CeraVe</h3>
+            <ul style="margin: 0; padding-left: 1.25rem; display: grid; gap: 0.5rem;">
               {data.pros.cerave.map((point) => (
-                <li>{point}</li>
+                <li style="color: var(--color-text); line-height: 1.6;">{point}</li>
               ))}
             </ul>
           </article>
-          <article class="card">
-            <h3>Alternative</h3>
-            <ul>
+          <article class="card" style="padding: 1.5rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0 0 1rem 0; color: var(--color-text);">Alternative</h3>
+            <ul style="margin: 0; padding-left: 1.25rem; display: grid; gap: 0.5rem;">
               {data.pros.competitor.map((point) => (
-                <li>{point}</li>
+                <li style="color: var(--color-text); line-height: 1.6;">{point}</li>
               ))}
             </ul>
           </article>
@@ -79,11 +79,11 @@ const faqSchema = data.faqs.length
       </div>
       {data.recommendations.length > 0 && (
         <div>
-          <h2>Who should pick which</h2>
-          <ul>
+          <h2 style="font-size: 1.75rem; font-weight: 600; margin-bottom: 1rem;">Who should pick which</h2>
+          <ul style="margin: 0; padding-left: 1.25rem; display: grid; gap: 0.75rem;">
             {data.recommendations.map((rec) => (
-              <li>
-                <strong>{rec.summary}</strong> — {rec.audience}
+              <li style="line-height: 1.65;">
+                <strong style="color: var(--color-accent-dark);">{rec.summary}</strong> <span style="color: var(--color-muted);">—</span> {rec.audience}
               </li>
             ))}
           </ul>
