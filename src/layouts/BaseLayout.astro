@@ -82,8 +82,8 @@ const structuredData = {
   <body>
     <header class="nav-shell">
       <div class="container nav-inner">
-        <a class="logo" href="/">
-          <strong>CeraVe Playbook</strong>
+        <a class="logo" href="/" aria-label="CeraVe Dry Skin Playbook Home">
+          <strong>CeraVe</strong> <span style="color: var(--color-muted);">Dry Skin Playbook</span>
         </a>
         <nav class="nav-links" aria-label="Primary">
           {primaryLinks.map((link) => (
@@ -179,7 +179,7 @@ const structuredData = {
 
         const scheduleClose = () => {
           window.clearTimeout(closeTimeout);
-          closeTimeout = window.setTimeout(() => setOpen(false), 160);
+          closeTimeout = window.setTimeout(() => setOpen(false), 200);
         };
 
         trigger?.addEventListener('mouseenter', openPanel);
@@ -193,9 +193,6 @@ const structuredData = {
           }
         });
 
-        trigger?.addEventListener('mouseleave', scheduleClose);
-        panel?.addEventListener('mouseenter', openPanel);
-        panel?.addEventListener('mouseleave', scheduleClose);
         group.addEventListener('mouseenter', openPanel);
         group.addEventListener('mouseleave', scheduleClose);
         group.addEventListener('focusout', (event) => {
