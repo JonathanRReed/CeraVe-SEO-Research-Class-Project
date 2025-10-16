@@ -1,43 +1,41 @@
-# Astro Starter Kit: Minimal
+# CeraVe Skin Smarts SEO Microsite
 
-```sh
-bun create astro@latest -- --template minimal
+This project was created for the **Global Career Accelerator** college program in collaboration with **CeraVe**. The brief: step into the role of a digital marketing associate, expand CeraVe's SEO presence, and build search-optimized content that connects with the persona "Carlos"—a man looking for science-backed skincare guidance.
+
+## Project Goals
+- **Develop** an expanded keyword strategy targeting male skincare queries.
+- **Write** three SEO-focused articles for the Skin Smarts blog that educate Carlos and reflect CeraVe's trusted, clinical tone.
+- **Launch** a cohesive microsite that showcases guides, comparisons, ingredient explainers, tools, and FAQs.
+
+## Tech Stack
+- **Framework**: [Astro](https://astro.build/) with MDX support.
+- **Runtime**: [Bun](https://bun.sh/) for development scripts.
+- **Styling**: Custom CSS built around CeraVe's brand system.
+
+## Local Development
+```bash
+bun install
+bun run dev
 ```
+The site runs at `http://localhost:4321/` by default.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+## Build
+```bash
+bun run build
 ```
+Static output is written to the `dist/` directory.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## GitHub Pages Deployment
+This repo ships with `.github/workflows/deploy.yml` to publish the site on GitHub Pages.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+1. Push to `main` (or trigger manually from the Actions tab).
+2. GitHub Actions installs dependencies, builds with Astro, and deploys the `dist/` folder to Pages.
+3. The workflow automatically sets the correct base path using the repository name.
 
-Any static assets, like images, can be placed in the `public/` directory.
+For custom domains or branch changes, update `astro.config.mjs` and the workflow as needed.
 
-## 🧞 Commands
+## Interview Reflection
+As part of the brief, we also prepared answers to AI-era marketing interview prompts, focusing on measurement, content strategy, and collaboration with technical teams.
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+---
+**Prepared as a capstone deliverable for the Global Career Accelerator x CeraVe program.**
