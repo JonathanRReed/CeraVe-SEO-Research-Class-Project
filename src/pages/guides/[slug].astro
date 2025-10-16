@@ -1,15 +1,17 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideTemplate from '../../components/templates/GuideTemplate.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-const { slug } = Astro.params;
-const guides = await getCollection('guides');
-const entry = guides.find((guide) => guide.slug === slug);
-
-if (!entry) {
-  throw new Error(`Guide not found for slug: ${slug}`);
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
 }
+
+const { entry } = Astro.props as { entry: CollectionEntry<'guides'> };
 
 const breadcrumbs = [
   { title: 'Home', url: '/' },

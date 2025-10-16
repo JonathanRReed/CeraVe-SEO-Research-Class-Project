@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import type { SiteEntry } from '../data/siteMap';
 import { siteMap } from '../data/siteMap';
 
 type Props = {
@@ -8,7 +7,7 @@ type Props = {
   description?: string;
   keywords?: string[];
   canonical?: string;
-  breadcrumbs?: SiteEntry[];
+  breadcrumbs?: { title: string; url: string }[];
 };
 
 const {
