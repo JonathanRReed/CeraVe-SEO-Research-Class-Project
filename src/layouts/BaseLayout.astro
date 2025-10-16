@@ -163,6 +163,7 @@ const structuredData = {
         const setOpen = (isOpen) => {
           panel?.classList.toggle('open', isOpen);
           trigger?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          group.classList.toggle('is-open', isOpen);
         };
 
         const openPanel = () => setOpen(true);
@@ -180,6 +181,7 @@ const structuredData = {
         });
 
         group.addEventListener('mouseleave', closePanel);
+        group.addEventListener('mouseenter', openPanel);
         group.addEventListener('focusout', (event) => {
           if (!group.contains(event.relatedTarget)) {
             closePanel();

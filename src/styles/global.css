@@ -316,6 +316,12 @@
   display: flex;
 }
 
+.nav-group.is-open .nav-panel,
+.nav-group:focus-within .nav-panel,
+.nav-group:hover .nav-panel {
+  display: flex;
+}
+
 .nav-panel a {
   padding: 0.45rem 0.75rem;
   border-radius: 8px;
