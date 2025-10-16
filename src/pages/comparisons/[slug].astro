@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ComparisonTemplate from '../../components/templates/ComparisonTemplate.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const comparisons = await getCollection('comparisons');
+  return comparisons.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props as { entry: CollectionEntry<'comparisons'> };
+
+const breadcrumbs = [
+  { title: 'Home', url: '/' },
+  { title: 'Comparisons', url: '/comparisons' },
+  { title: entry.data.title, url: `/comparisons/${entry.slug}` },
+];
+---
+
+<BaseLayout
+  title={`${entry.data.title} | Comparisons`}
+  description={entry.data.description}
+  keywords={entry.data.keywords}
+  breadcrumbs={breadcrumbs}
+>
+  <ComparisonTemplate entry={entry} />
+</BaseLayout>

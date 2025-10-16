@@ -159,6 +159,7 @@ const structuredData = {
       navGroups.forEach((group) => {
         const trigger = group.querySelector('.nav-trigger');
         const panel = group.querySelector('.nav-panel');
+        let closeTimeout;
 
         const setOpen = (isOpen) => {
           panel?.classList.toggle('open', isOpen);
@@ -166,8 +167,20 @@ const structuredData = {
           group.classList.toggle('is-open', isOpen);
         };
 
-        const openPanel = () => setOpen(true);
-        const closePanel = () => setOpen(false);
+        const openPanel = () => {
+          window.clearTimeout(closeTimeout);
+          setOpen(true);
+        };
+
+        const closePanel = () => {
+          window.clearTimeout(closeTimeout);
+          setOpen(false);
+        };
+
+        const scheduleClose = () => {
+          window.clearTimeout(closeTimeout);
+          closeTimeout = window.setTimeout(() => setOpen(false), 160);
+        };
 
         trigger?.addEventListener('mouseenter', openPanel);
         trigger?.addEventListener('focus', openPanel);
@@ -180,11 +193,14 @@ const structuredData = {
           }
         });
 
-        group.addEventListener('mouseleave', closePanel);
+        trigger?.addEventListener('mouseleave', scheduleClose);
+        panel?.addEventListener('mouseenter', openPanel);
+        panel?.addEventListener('mouseleave', scheduleClose);
         group.addEventListener('mouseenter', openPanel);
+        group.addEventListener('mouseleave', scheduleClose);
         group.addEventListener('focusout', (event) => {
           if (!group.contains(event.relatedTarget)) {
-            closePanel();
+            scheduleClose();
           }
         });
       });

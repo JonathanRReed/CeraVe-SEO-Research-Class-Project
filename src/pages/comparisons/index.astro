@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import { getCollection } from 'astro:content';
+
+const comparisons = await getCollection('comparisons');
+---
+
+<BaseLayout
+  title="Comparison Finder"
+  description="See how CeraVe stacks up to other products with neutral, decision-ready comparisons."
+  keywords={['cerave vs competitors', 'cleanser comparison', 'moisturizer comparison']}
+  breadcrumbs={[
+    { title: 'Home', url: '/' },
+    { title: 'Comparisons', url: '/comparisons' },
+  ]}
+>
+  <HeroSection
+    heading="Compare products with confidence"
+    subheading="Review textures, barrier support, and best use cases side-by-side to choose the right formula."
+    primaryCta={{ label: 'Start with cleanser matchup', href: '/comparisons/cerave-vs-cetaphil-cleanser' }}
+  />
+
+  <section class="stack container">
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+      {comparisons.map((entry) => (
+        <article class="card" data-page-type="comparison">
+          <h3>{entry.data.title}</h3>
+          <p>{entry.data.description}</p>
+          <a class="btn btn-secondary" href={`/comparisons/${entry.slug}`}>Compare now</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
