@@ -48,3 +48,9 @@ As part of the brief, we also prepared answers to AI-era marketing interview pro
 ---
 
 **Prepared as a capstone deliverable for the Global Career Accelerator x CeraVe program.**
+
+## License
+
+The source code and original authored content in this repository are licensed
+under MIT. Brand names and trademarks are excluded. See [`LICENSE`](./LICENSE)
+and [`NOTICE.md`](./NOTICE.md).
