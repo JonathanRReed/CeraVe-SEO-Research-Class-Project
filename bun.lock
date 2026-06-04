@@ -6,7 +6,7 @@
       "name": "cerave-seo-research",
       "dependencies": {
         "@astrojs/mdx": "^4.3.14",
-        "astro": "^5.18.1",
+        "astro": "^5.18.2",
       },
     },
   },
